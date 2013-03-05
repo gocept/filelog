@@ -1,11 +1,12 @@
 syntax: glob
-
-.installed.cfg
 bin
-develop-eggs
-
-*.egg-info
-
-tmp
 build
+develop-eggs
 dist
+*.egg-info
+include
+.installed.cfg
+lib
+lib64
+tmp
+__pycache__
