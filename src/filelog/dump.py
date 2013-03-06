@@ -42,5 +42,5 @@ class NullDumper(Dumper):
     def __init__(self, *args, **kw):
         pass
 
-    def dump(self, filename):
+    def dump(self, filename, timestamp):
         pass
