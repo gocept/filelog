@@ -1,4 +1,5 @@
 syntax: glob
+eggs
 bin
 build
 develop-eggs
