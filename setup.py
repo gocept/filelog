@@ -1,13 +1,18 @@
 # python3.2
 
 from setuptools import setup, find_packages
+import os
 
 version = '0.1'
+here = os.path.abspath(os.path.dirname(__file__))
+with open('README.rst') as f:
+    README = f.read().decode()
 
 setup(
     name='filelog',
     version=version,
     description="Log file changes in a directory",
+    long_description=README,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
