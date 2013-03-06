@@ -16,8 +16,7 @@ class EventFormatter(pyinotify.ProcessEvent):
         maskname = data.pop('maskname').lstrip('IN_')
         data.pop('wd')
         data.pop('mask')
-        data.pop('path')
+        timestamp = datetime.datetime.now().isoformat()
         print('{} {} {} {}'.format(
-            datetime.datetime.now().isoformat(),
-            pathname, maskname, json.dumps(data)))
-        self.dumper.dump(pathname)
+            timestamp, pathname, maskname, json.dumps(data)))
+        self.dumper.dump(pathname, timestamp)

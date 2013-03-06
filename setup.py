@@ -6,7 +6,7 @@ import os
 version = '0.1'
 here = os.path.abspath(os.path.dirname(__file__))
 with open('README.rst') as f:
-    README = f.read().decode()
+    README = f.read()
 
 setup(
     name='filelog',

@@ -1,5 +1,5 @@
 from .loop import Loop
-from .dump import Dumper
+from .dump import Dumper, NullDumper
 import argparse
 
 
@@ -8,11 +8,15 @@ def main():
 Monitor directory for all file changes.""")
     argp.add_argument('basedir', metavar='BASEDIR',
                       help='directory to monitor recursively')
-    argp.add_argument('-p', '--prefix', help='dir to dump changed files in')
+    argp.add_argument('-p', '--prefix', default='/tmp/dump',
+                      help='dir to dump changed files (default: %(default)s)')
     argp.add_argument('-d', '--dump', metavar='FILE',
-                      help='whitelist of filename that should be saved on '
+                      help='list of filename that should be saved on '
                       'modification')
     args = argp.parse_args()
-    dumper = Dumper(args.prefix, args.dump)
+    if args.dump:
+        dumper = Dumper(args.prefix, args.dump)
+    else:
+        dumper = NullDumper()
     loop = Loop(args.basedir, dumper)
     loop.run_forever()
