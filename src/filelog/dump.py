@@ -21,13 +21,10 @@ class Dumper:
             pass
         return target
 
-    def dump(self, filename, timestamp):
-        if not filename in self.dumpfiles:
+    def dump(self, filename, timestamp, statinfo):
+        if not filename in self.dumpfiles or not statinfo:
             return
-        try:
-            mode = os.lstat(filename).st_mode
-        except OSError:
-            return
+        mode = statinfo.st_mode
         if stat.S_ISREG(mode):
             target = self.prepare_target(filename, timestamp)
             shutil.copyfile(filename, target)
@@ -42,5 +39,5 @@ class NullDumper(Dumper):
     def __init__(self, *args, **kw):
         pass
 
-    def dump(self, filename, timestamp):
+    def dump(self, *args, **kw):
         pass
