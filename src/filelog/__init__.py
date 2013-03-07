@@ -1,5 +1,8 @@
+#!python3
+
 from .loop import Loop
 from .dump import Dumper, NullDumper
+from .event import EventFormatter
 import argparse
 
 
@@ -18,5 +21,5 @@ Monitor directory for all file changes.""")
         dumper = Dumper(args.prefix, args.dump)
     else:
         dumper = NullDumper()
-    loop = Loop(args.basedir, dumper)
+    loop = Loop(args.basedir, EventFormatter(dumper))
     loop.run_forever()
