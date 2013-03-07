@@ -30,11 +30,12 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
+    test_suite='filelog.tests',
     zip_safe=False,
     install_requires=[
         'pyinotify>=0.9.4',
     ],
     entry_points={
         'console_scripts': ['filelog=filelog:main']
-    }
+    },
 )

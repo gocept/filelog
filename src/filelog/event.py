@@ -1,22 +1,23 @@
 import datetime
 import json
 import pyinotify
+import sys
 
 
 class EventFormatter(pyinotify.ProcessEvent):
     """Generates log files from inotify events."""
 
-    def __init__(self, dumper):
+    def __init__(self, dumper, out=sys.stdout):
         super(EventFormatter, self).__init__()
         self.dumper = dumper
+        self.out = out
 
     def process_default(self, event):
-        data = dict(event.__dict__)
-        pathname = data.pop('pathname')
-        maskname = data.pop('maskname').lstrip('IN_')
-        data.pop('wd')
-        data.pop('mask')
         timestamp = datetime.datetime.now().isoformat()
-        print('{} {} {} {}'.format(
-            timestamp, pathname, maskname, json.dumps(data)))
-        self.dumper.dump(pathname, timestamp)
+        # fill optional fields with '' to aid output formatting
+        for field in ['src_pathname', 'cookie']:
+            setattr(event, field, getattr(event, field, ''))
+        print('{} {e.pathname} {e.maskname} dir={e.dir} '
+              'src={e.src_pathname} cookie={e.cookie}'.format(
+              timestamp, e=event), file=self.out)
+        self.dumper.dump(event.pathname, timestamp)
